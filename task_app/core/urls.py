@@ -14,8 +14,28 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from core.swagger import urls as swagger_urls
+from core import api_urls
+from django.conf.urls.static import static
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
+urlpatterns = []
+
+# Swagger and documentation will only be available in DEBUG mode
+if settings.DEBUG:
+    urlpatterns += [
+        # Documentation:
+        path('general/admin/doc/', include('django.contrib.admindocs.urls')),
+        # Swagger:
+        path("api/v1/swagger/", include(swagger_urls)),
+    ]
+    urlpatterns += static(
+        settings.MEDIA_URL, 
+        document_root=settings.MEDIA_ROOT
+    )
+
+urlpatterns += [
+    path('general/admin/', admin.site.urls),
+    path("api/v1/", include(api_urls)),
 ]

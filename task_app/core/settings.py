@@ -21,17 +21,21 @@ def get_list_env(environ_name, default_value):
     return os.environ.get(environ_name).split(',')
 
 
-
 class Dev(Configuration):
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
     BASE_DIR = Path(__file__).resolve().parent.parent
 
     # SECURITY WARNING: keep the secret key used in production secret!
-    SECRET_KEY = os.urandom(28).hex()
+    SECRET_KEY = "secretshhhh"#os.urandom(34).hex()
 
     DEBUG = get_bool_env('DEBUG', True)
 
     ALLOWED_HOSTS = [ '*' ]
+    
+    DOMAIN = 'localhost'#'192.168.0.14'
+    PORT = '8000'
+
+    CORS_ALLOW_ALL_ORIGINS = True
 
     INSTALLED_APPS = [
         'django.contrib.admin',
@@ -40,15 +44,21 @@ class Dev(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        # Cors:
+        "corsheaders",
         # Admin documentation:
         'django.contrib.admindocs',
         # Rest framework:
         'rest_framework',
+        'django_filters',
         # Swager:
         'drf_yasg',
+        # Custom apps:
+        'authentication'
     ]
 
     MIDDLEWARE = [
+        "corsheaders.middleware.CorsMiddleware",
         'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
@@ -111,12 +121,21 @@ class Dev(Configuration):
     # Internationalization
     # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-    LANGUAGE_CODE = 'en-us'
+    LANGUAGE_CODE = 'en'
+    LOCALE_PATHS = [
+        BASE_DIR / 'locale/',
+    ]
+    LANGUAGES = (
+        ('en', _('English')),
+        ('es', _('Spanish')),
+    )
 
-    TIME_ZONE = 'UTC'
-
+    TIME_ZONE = "UTC"
+    # Enables Django’s translation system
     USE_I18N = True
-
+    # Django will display numbers and dates using the format of the current locale
+    USE_L10N = True
+    # Datetimes will be timezone-aware
     USE_TZ = True
 
 
@@ -124,8 +143,71 @@ class Dev(Configuration):
     # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
     STATIC_URL = 'static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+    MEDIA_URL = 'media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
     # Default primary key field type
     # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
     DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "verbose": {
+                "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+                "style": "{",
+            },
+        },
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+                "stream": "ext://sys.stdout",
+                "formatter": "verbose",
+            },
+        },
+        "root": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        }
+    }
+
+    # Django Rest Framework setting:
+    REST_FRAMEWORK = {
+        "DEFAULT_AUTHENTICATION_CLASSES": [
+            "rest_framework_simplejwt.authentication.JWTAuthentication"
+        ],
+        "DEFAULT_PERMISSION_CLASSES": [
+            "rest_framework.permissions.IsAuthenticated",
+        ],
+        "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+        "PAGE_SIZE": 10,
+        "DEFAULT_FILTER_BACKENDS": [
+            "django_filters.rest_framework.DjangoFilterBackend",
+        ],
+    }
+
+    SIMPLE_JWT = {
+        "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+        "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    }
+
+    SWAGGER_SETTINGS = {
+        "SECURITY_DEFINITIONS": {
+            "Token": {
+                "type": "apiKey", 
+                "name": "Authorization",
+                "in": "header"
+            },
+            "Basic": {
+                "type": "basic"
+            },
+        }
+    }
+
+    AUTH_USER_MODEL = "authentication.User"
+
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
