@@ -44,6 +44,9 @@ class Dev(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        # Task schedulling:
+        'django_celery_results',
+        'django_celery_beat',
         # Cors:
         "corsheaders",
         # Admin documentation:
@@ -211,3 +214,6 @@ class Dev(Configuration):
     AUTH_USER_MODEL = "authentication.User"
 
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+    CELERY_RESULT_BACKEND = "django-db"
+    CELERY_BROKER_URL = "redis://localhost:6379/0"
