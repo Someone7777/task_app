@@ -9,6 +9,7 @@ admin.site.unregister(Group)
 class UserAdmin(admin.ModelAdmin):
     fields = (
         'id',
+        'full_name', 
         'username', 
         'email',
         'language',

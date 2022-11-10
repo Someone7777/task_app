@@ -216,4 +216,4 @@ class Dev(Configuration):
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
     CELERY_RESULT_BACKEND = "django-db"
-    CELERY_BROKER_URL = "redis://localhost:6379/0"
+    CELERY_BROKER_URL = "redis://192.168.0.23:6379/0"
