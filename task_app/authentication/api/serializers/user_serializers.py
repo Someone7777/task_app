@@ -20,10 +20,9 @@ class UserCreationSerializer(serializers.ModelSerializer):
         required=True, 
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
-    full_name = serializers.EmailField(
+    full_name = serializers.CharField(
         required=True, 
         max_length=50,
-        validators=[UniqueValidator(queryset=User.objects.all())]
     )
     password = serializers.CharField(
         required=True, 
@@ -67,3 +66,41 @@ class UserCreationSerializer(serializers.ModelSerializer):
                 {'common_fields': _("Full name and email can not be the same")})
         del attrs['password2']
         return attrs
+    
+    def create(self, validated_data):
+        language = validated_data['language']
+        user = User.objects.create(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            language=language
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+
+
+class UserRetrieveUpdateDestroySerializer(serializers.ModelSerializer):
+    """
+    Serializer to get, update or delete user data
+    """
+    username = serializers.CharField(
+        required=True, 
+        max_length=15,
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
+    email = serializers.EmailField(
+        required=True, 
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'email',
+            'full_name',
+            'language',
+            'last_login'
+        ]
+        read_only_fields = [
+            'last_login'
+        ]
