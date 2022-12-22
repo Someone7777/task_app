@@ -34,7 +34,7 @@ def _image_user_dir(instance, filename):
     return 'user_{0}/{1}'.format(instance.id, filename)
 
 class User(AbstractUser):
-    # Fields to iggnore in db form default User model:
+    # Fields to ignore in db form default User model:
     first_name = None
     last_name = None
 
@@ -44,6 +44,11 @@ class User(AbstractUser):
     email = models.EmailField(
         verbose_name=_("email address"),
         unique=True,
+    )
+    full_name = models.CharField(
+        verbose_name =_("full name"),
+        validators = [MinLengthValidator(1)],
+        max_length = 50
     )
     language = models.CharField(
         verbose_name =_("language"),
@@ -94,7 +99,7 @@ class User(AbstractUser):
 
     objects = BalanceUserManager()
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = [ "username" ]
+    REQUIRED_FIELDS = [ "username", "full_name" ]
     
     def __str__(self):
         return self.email + " " + self.username

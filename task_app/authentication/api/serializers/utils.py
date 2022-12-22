@@ -13,3 +13,15 @@ def check_user_with_email(email):
     if user.verified:
         raise serializers.ValidationError(
             {"email": _("User already verified")})
+
+def check_username_pass12(username, email, full_name, password1, password2):
+    """
+    Checks if 2 passwords are different, also that username and email 
+    are different to the passwords
+    """
+    if password1 != password2:
+        raise serializers.ValidationError(
+            {"password": _("Password fields do not match")})
+    if username == password1 or email == password1 or full_name == password1:
+        raise serializers.ValidationError(
+            {"password": _("Password cannot match other profile data")})

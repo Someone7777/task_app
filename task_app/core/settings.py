@@ -26,7 +26,7 @@ class Dev(Configuration):
     BASE_DIR = Path(__file__).resolve().parent.parent
 
     # SECURITY WARNING: keep the secret key used in production secret!
-    SECRET_KEY = "secretshhhh"#os.urandom(34).hex()
+    SECRET_KEY = "secret"#os.urandom(34).hex()
 
     DEBUG = get_bool_env('DEBUG', True)
 
@@ -44,6 +44,9 @@ class Dev(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        # Task schedulling:
+        'django_celery_results',
+        'django_celery_beat',
         # Cors:
         "corsheaders",
         # Admin documentation:
@@ -62,10 +65,10 @@ class Dev(Configuration):
         'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
+        # 'django.middleware.csrf.CsrfViewMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     ]
 
     ROOT_URLCONF = 'core.urls'
@@ -211,3 +214,9 @@ class Dev(Configuration):
     AUTH_USER_MODEL = "authentication.User"
 
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+    CELERY_RESULT_BACKEND = "django-db"
+    CELERY_BROKER_URL = "redis://localhost:6379/0"
+
+    EMAIL_CODE_THRESHOLD = get_int_env('EMAIL_CODE_THRESHOLD', 60)
+    EMAIL_CODE_VALID = get_int_env('EMAIL_CODE_VALID', 120)
