@@ -57,7 +57,8 @@ class Dev(Configuration):
         # Swager:
         'drf_yasg',
         # Custom apps:
-        'authentication'
+        'authentication',
+        'tasks'
     ]
 
     MIDDLEWARE = [
