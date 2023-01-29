@@ -31,7 +31,12 @@ else
 fi
 
 # Create superuser
-if  python manage.py createsuperuser --no-input; then
+export DJANGO_SUPERUSER_PASSWORD=$APP_SUPERUSER_PASSWORD
+if  python manage.py createsuperuser \
+    --email $APP_SUPERUSER_EMAIL \
+    --username $APP_SUPERUSER_USERNAME \
+    --full_name $APP_SUPERUSER_FULL_NAME \
+    --no-input; then
     echo Superuser created
 else
     echo Superuser already created, skipping
@@ -53,4 +58,4 @@ cat << "EOF"
 EOF
 
 APP_USER_UID=`id -u $APP_USER`
-exec uwsgi --uid=$APP_USER_UID --http-auto-chunked --http-keepalive --ini app.uwsgi.ini "$@"
+exec gunicorn --bind 0.0.0.0:8000 --user $APP_USER_UID --workers 1 --threads 8 --timeout 0 core.wsgi:application "$@"

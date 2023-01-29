@@ -87,8 +87,6 @@ services:
       - ./logs/nginx:/var/log/nginx
     depends_on:
       - backend
-    env_file:
-      - ./nginx.env
     restart: unless-stopped
     networks:
       balance_home_app_net:
