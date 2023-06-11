@@ -46,10 +46,22 @@ class User(AbstractUser):
         unique=True,
         editable=False
     )
+    username = models.CharField(
+        _("username"),
+        max_length=10,
+        unique=True,
+        help_text=_(
+            "Required. 10 characters or fewer. Letters, digits and @/./+/-/_ only."
+        ),
+        validators=[super().username_validator],
+        error_messages={
+            "unique": _("A user with that username already exists."),
+        },
+    )
     full_name = models.CharField(
         verbose_name =_("full name"),
         validators = [MinLengthValidator(1)],
-        max_length = 50
+        max_length = 150
     )
     language = models.CharField(
         verbose_name =_("language"),
