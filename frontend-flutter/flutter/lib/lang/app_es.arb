@@ -1,0 +1,22 @@
+{
+    "@_LANGUAGE_NAMES":{},
+    "english": "Ingles",
+    "spanish": "Español",
+    "unknown": "Desconocido",
+
+    "@_TITLE":{},
+    "appTitle": "TaskApp",
+
+    "@_APP_ERRORS":{},
+    "noConnection": "No se ha podido establecer conexión a nuestros servicios",
+    "badRequest": "Hubo un error de conexión con nuestros servicios, por favor intentalo más tarde",
+    "wrongCredentials": "Correo o contraseña incorrecta",
+    "genericError": "Algo fue mal, por favor intentalo más tarde",
+    "pageNotFound": "Página no encontrada",
+
+    "@_GENERIC":{},
+    "loadingData": "Cargando datos",
+    "confirmation": "Confirmar",
+    "create": "Crear",
+    "cancel": "Cancelar"
+}
