@@ -1,0 +1,1 @@
+Código generado para la verificación de la cuenta: {{ code }}
