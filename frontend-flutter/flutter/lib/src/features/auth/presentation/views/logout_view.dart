@@ -22,7 +22,7 @@ class LogoutView extends ConsumerWidget {
     Future.delayed(Duration.zero, () async {
       final value = await authController.signOut();
       value.fold((_) {
-        ErrorView.go();
+        AppErrorView.go();
       }, (_) {
         navigatorKey.currentContext!.goNamed(AuthView.routeName);
       });

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:task_app/config/app_colors.dart';
 
-class LoadingView extends StatelessWidget {
-  /// Named route for [LoadingView]
+class AppLoadingView extends StatelessWidget {
+  /// Named route for [AppLoadingView]
   static const String routeName = 'loading';
 
-  /// Path route for [LoadingView]
+  /// Path route for [AppLoadingView]
   static const String routePath = 'load';
 
   final void Function(BuildContext context)? func;
 
-  const LoadingView({this.func, super.key});
+  const AppLoadingView({this.func, super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -21,7 +21,7 @@
             "type": "dart",
             "deviceId": "chrome",
             "args": [
-                "--web-renderer", "auto",
+                "--web-renderer", "html",
                 "--web-port", "5000"
             ]
         }

@@ -35,8 +35,8 @@ class APIContract {
    * ============ Email code ============ *
    */
   /// [POST] Send email code
-  static const String emailCodeSend = "/api/v1/email_code/send";
+  static const String emailCodeSend = "/api/v1/user/code/send";
 
   /// [POST] Verify sent email code
-  static const String emailCodeVerify = "/api/v1/email_code/verify";
+  static const String emailCodeVerify = "/api/v1/user/code/verify";
 }

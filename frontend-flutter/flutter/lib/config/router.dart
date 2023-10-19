@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:task_app/config/api_client.dart';
+import 'package:task_app/src/core/presentation/views/app_info_loading_view.dart';
 import 'package:task_app/src/core/presentation/views/error_view.dart';
-import 'package:task_app/src/core/presentation/views/loading_view.dart';
+import 'package:task_app/src/core/presentation/views/app_loading_view.dart';
 import 'package:task_app/src/features/auth/presentation/views/auth_loading_view.dart';
 import 'package:task_app/src/features/auth/presentation/views/auth_view.dart';
 import 'package:task_app/src/features/auth/presentation/views/logout_view.dart';
@@ -14,14 +15,15 @@ final router = GoRouter(
   errorBuilder: (context, state) {
     if (state.error
         .toString()
-        .contains("/${ErrorView.noConnectionErrorPath}")) {
-      return const ErrorView(location: "/${ErrorView.noConnectionErrorPath}");
+        .contains("/${AppErrorView.noConnectionErrorPath}")) {
+      return const AppErrorView(
+          location: "/${AppErrorView.noConnectionErrorPath}");
     }
-    if (state.error.toString().contains("/${ErrorView.notFoundPath}")) {
-      return const ErrorView(location: "/${ErrorView.notFoundPath}");
+    if (state.error.toString().contains("/${AppErrorView.notFoundPath}")) {
+      return const AppErrorView(location: "/${AppErrorView.notFoundPath}");
     }
     debugPrint(state.error.toString());
-    return const ErrorView(location: '/${ErrorView.routePath}');
+    return const AppErrorView(location: '/${AppErrorView.notFoundPath}');
   },
   navigatorKey: navigatorKey,
   debugLogDiagnostics: true,
@@ -32,7 +34,7 @@ final router = GoRouter(
     GoRoute(
         name: 'root',
         path: '/',
-        builder: (_, __) => const LoadingView(),
+        builder: (_, __) => const AppInfoLoadingView(),
         redirect: rootGuard,
         routes: [
           GoRoute(
@@ -40,7 +42,12 @@ final router = GoRouter(
             path: AuthLoadingView.routePath,
             builder: (context, state) {
               return AuthLoadingView(
-                  location: state.queryParams['path'] ?? "/${AuthLoadingView.routePath}");
+                  location: GoRouterState.of(context)
+                              .uri
+                              .queryParameters['path'] !=
+                          null
+                      ? GoRouterState.of(context).uri.queryParameters['path']!
+                      : "/${AuthLoadingView.routePath}");
             },
           ),
           GoRoute(
@@ -56,15 +63,15 @@ final router = GoRouter(
             builder: (context, state) => const LogoutView(),
           ),
           GoRoute(
-            name: LoadingView.routeName,
-            path: LoadingView.routePath,
-            builder: (context, state) => const LoadingView(),
+            name: AppLoadingView.routeName,
+            path: AppLoadingView.routePath,
+            builder: (context, state) => const AppLoadingView(),
           ),
           GoRoute(
               name: 'passwordRoot',
               path: 'password',
               redirect: passwordGuard,
-              builder: (_, __) => LoadingView(func: (context) {
+              builder: (_, __) => AppLoadingView(func: (context) {
                     context.go("/${AuthView.routePath}");
                   }),
               routes: [
@@ -93,16 +100,12 @@ String? appGuard(BuildContext context, GoRouterState state) {
 
 @visibleForTesting
 String? rootGuard(BuildContext context, GoRouterState state) {
-  final goingToRoot = state.location == '/';
-  if (goingToRoot) {
-    return "/${AuthLoadingView.routePath}?path=/${AuthView.routePath}";
-  }
   return null;
 }
 
 Future<String?> logoutGuard(BuildContext context, GoRouterState state) async {
   final loggedIn = authStateListenable.value;
-  final goingToLogout = state.location == '/${LogoutView.routePath}';
+  final goingToLogout = state.matchedLocation == '/${LogoutView.routePath}';
   if (!loggedIn && goingToLogout) {
     return "/";
   }
@@ -116,7 +119,7 @@ Future<String?> authGuard(BuildContext context, GoRouterState state) async {
     // TODO home view
     return "/HomeView.routePath";
   } else if (!loggedIn && !goingToAuth) {
-    return '/';
+    return '/${AuthView.routePath}';
   } else if (state.extra == null || state.extra != true) {
     return "/${AuthLoadingView.routePath}?path=/${AuthView.routePath}";
   }
@@ -130,10 +133,10 @@ Future<String?> authGuardOrNone(
   if (!isConnected &&
       (state.name == SettingsView.routeName ||
           state.name == LogoutView.routeName)) {
-    return "/${ErrorView.noConnectionErrorPath}";
+    return "/${AppErrorView.noConnectionErrorPath}";
   }
   if (!loggedIn) {
-    return "/${AuthLoadingView.routePath}?path=${state.location}";
+    return "/${AuthLoadingView.routePath}?path=${state.matchedLocation}";
   }
   return null;
 }
@@ -141,30 +144,9 @@ Future<String?> authGuardOrNone(
 Future<String?> passwordGuard(BuildContext context, GoRouterState state) async {
   final isConnected = connectionStateListenable.value;
   if (!isConnected) {
-    return "/${ErrorView.noConnectionErrorPath}";
+    return "/${AppErrorView.noConnectionErrorPath}";
   }
-  final goingToPassword = state.location == '/password';
+  final goingToPassword = state.matchedLocation == '/password';
   if (goingToPassword) return "/";
   return null;
-}
-
-/// A page that fades in an out.
-class FadeTransitionPage extends CustomTransitionPage<void> {
-  /// Creates a [FadeTransitionPage].
-  FadeTransitionPage({
-    required LocalKey key,
-    required Widget child,
-  }) : super(
-            key: key,
-            transitionsBuilder: (BuildContext context,
-                    Animation<double> animation,
-                    Animation<double> secondaryAnimation,
-                    Widget child) =>
-                FadeTransition(
-                  opacity: animation.drive(_curveTween),
-                  child: child,
-                ),
-            child: child);
-
-  static final CurveTween _curveTween = CurveTween(curve: Curves.easeIn);
 }

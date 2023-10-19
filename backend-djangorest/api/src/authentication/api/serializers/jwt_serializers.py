@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 # Alternative User model import:
 # from authentication.models import User
 from authentication.exceptions import (
-    NewPasswordUserDataException,
+    UnverifiedEmailError,
     InvalidRefreshTokenException,
     InvalidCredentialsException
 )
@@ -18,7 +18,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         if not user.verified:
-            raise NewPasswordUserDataException()
+            raise UnverifiedEmailError()
         token = super(CustomTokenObtainPairSerializer, cls).get_token(user)
         # Custom keys added in PAYLOAD
         token['username'] = user.username

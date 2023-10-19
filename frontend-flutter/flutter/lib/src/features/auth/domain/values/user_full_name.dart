@@ -16,7 +16,9 @@ class UserFullName extends ValueAbstract<String> {
     );
   }
 
-  const UserFullName._(this._value);
+  const UserFullName._(this._value
+  
+  );
 }
 
 /// * minLength: 1

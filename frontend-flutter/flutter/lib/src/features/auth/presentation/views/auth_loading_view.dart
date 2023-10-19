@@ -28,14 +28,14 @@ class AuthLoadingView extends ConsumerWidget {
         return const Scaffold(body: LoadingWidget());
       }
       value.fold((_) {
-        ErrorView.go404();
+        AppErrorView.go404();
         return const Scaffold(body: LoadingWidget());
       }, (_) {
         if (location != "/$routePath") {
           goLocation();
           return const Scaffold(body: LoadingWidget());
         } else {
-          ErrorView.go404();
+          AppErrorView.go404();
           return const Scaffold(body: LoadingWidget());
         }
       });
@@ -45,6 +45,6 @@ class AuthLoadingView extends ConsumerWidget {
 
   @visibleForTesting
   void goLocation({Object? extra}) {
-    navigatorKey.currentContext!.go(location, extra: extra);
+    router.go(location, extra: extra);
   }
 }

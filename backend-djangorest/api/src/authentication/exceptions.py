@@ -23,7 +23,7 @@ class NoInvitationCodeException(AppBadRequestException):
         super().__init__(detail, NO_INV_CODE_ERROR)
 
 
-class C(AppBadRequestException):
+class UnverifiedEmailError(AppBadRequestException):
     def __init__(self):
         detail = _("Unverified email")
         super().__init__(detail, UNVERIFIED_EMAIL_ERROR)

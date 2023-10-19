@@ -60,6 +60,7 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
     final appLocalizations = ref.watch(appLocalizationsProvider);
     username = UserName(appLocalizations, widget.usernameController.text);
     email = UserEmail(appLocalizations, widget.emailController.text);
+    fullname = UserFullName(appLocalizations, widget.fullnameController.text);
     password = UserPassword(appLocalizations, widget.passwordController.text);
     repeatPassword = UserRepeatPassword(appLocalizations,
         widget.passwordController.text, widget.repeatPasswordController.text);
