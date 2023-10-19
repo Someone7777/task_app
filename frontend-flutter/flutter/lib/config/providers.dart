@@ -4,6 +4,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:task_app/config/local_db_client.dart';
 import 'package:task_app/config/local_preferences_client.dart';
 import 'package:task_app/src/features/auth/infrastructure/datasources/local/user_local_data_source.dart';
+import 'package:task_app/src/features/task/infrastructure/datasources/local/task_local_data_source.dart';
 
 ///
 /// Infrastructure dependencies
@@ -18,6 +19,7 @@ final localDbClientProvider =
     Provider((ref) => LocalDbClient(
       tableNames: {
           UserLocalDataSource.tableName,
+          TaskLocalDataSource.tableName,
       }, 
       dbName: 'taskDb'
     ));

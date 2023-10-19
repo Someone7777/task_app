@@ -3,40 +3,46 @@ class APIContract {
   /*
    * ============ JWT login ============ *
    */
-  /// [POST] Returns JWT access and refresh token
+  /// `POST` Returns JWT access and refresh token
   static const String jwtLogin = "/api/v1/jwt";
 
   /*
    * ============ JWT refresh ============ *
    */
-  /// [POST] Returns new JWT access token
+  /// `POST` Returns new JWT access token
   static const String jwtRefresh = "/api/v1/jwt/refresh";
 
   /*
    * ============ User ============ *
    */
-  /// [GET], [PUT], [PATCH], [DEL] User profile info
+  /// `GET`, `PUT`, `PATCH`, `DEL` User profile info
   static const String userProfile = "/api/v1/user/profile";
 
-  /// [POST] User creation
+  /// `POST` User creation
   static const String userCreation = "/api/v1/user";
 
-  /// [POST] User password reset send code
+  /// `POST` User password reset send code
   static const String userPasswordResetStart = "/api/v1/user/password/reset";
 
-  /// [POST] User password reset verify code and new password
+  /// `POST` User password reset verify code and new password
   static const String userPasswordResetVerify =
       "/api/v1/user/password/reset/verify";
 
-  /// [POST] User password change
+  /// `POST` User password change
   static const String userPasswordChange = "/api/v1/user/password/change";
 
   /*
    * ============ Email code ============ *
    */
-  /// [POST] Send email code
+  /// `POST` Send email code
   static const String emailCodeSend = "/api/v1/user/code/send";
 
-  /// [POST] Verify sent email code
+  /// `POST` Verify sent email code
   static const String emailCodeVerify = "/api/v1/user/code/verify";
+
+  /*
+   * ============ Tasks ============ *
+   */
+  /// `POST` `GET`, `PUT`, `PATCH`, `DEL`  Task CRUD
+  static const String task = "/api/v1/task";
 }
