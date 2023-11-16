@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:task_app/config/router.dart';
 import 'package:task_app/src/core/presentation/widgets/app_text_button.dart';
 import 'package:task_app/src/core/presentation/widgets/app_text_form_field.dart';
 import 'package:task_app/src/core/presentation/widgets/password_text_form_field.dart';

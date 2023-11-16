@@ -1,6 +1,5 @@
 import 'package:task_app/config/providers.dart';
 import 'package:task_app/config/router.dart';
-import 'package:task_app/config/theme.dart';
 import 'package:task_app/src/core/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
