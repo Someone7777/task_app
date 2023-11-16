@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+
+  task-app-redis:
+    image: redis:7.0.11
+    container_name: task-app-redis
+    ports:
+      - 6379:6379
+    restart: unless-stopped
+    networks:
+      - task-app-redis-net
+
+  task-app-redisinsight:
+    image: redislabs/redisinsight
+    container_name: task-app-redisinsight
+    ports:
+      - 7081:8001
+    restart: unless-stopped
+    networks:
+      - task-app-redis-net
+
+networks:
+  task-app-redis-net:
