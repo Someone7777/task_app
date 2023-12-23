@@ -25,8 +25,7 @@ class LoginForm extends ConsumerStatefulWidget {
   LoginForm(
       {required this.emailController,
       required this.passwordController,
-      Key? key})
-      : super(key: key);
+      super.key});
 
   @override
   ConsumerState<LoginForm> createState() => _LoginFormState();

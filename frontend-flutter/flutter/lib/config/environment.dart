@@ -2,7 +2,7 @@ import 'package:envied/envied.dart';
 
 part 'environment.g.dart';
 
-// This class contains all the environment variables
+/// This class contains all the environment variables
 @Envied(path: 'app.env')
 abstract class Environment {
   /// URL for API

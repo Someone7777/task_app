@@ -5,6 +5,12 @@ import 'package:task_app/src/core/presentation/views/app_loading_view.dart';
 import 'package:task_app/src/features/auth/presentation/views/auth_view.dart';
 
 class AppInfoLoadingView extends ConsumerStatefulWidget {
+  /// Named route for [AppInfoLoadingView]
+  static const String routeName = 'infoLoading';
+
+  /// Path route for [AppInfoLoadingView]
+  static const String routePath = 'info-load';
+
   const AppInfoLoadingView({super.key});
 
   @override
@@ -17,7 +23,7 @@ class _AppInfoLoadingViewState extends ConsumerState<AppInfoLoadingView> {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration.zero, () {
-      router.goNamed(AuthView.routeName);
+      router.pushNamed(AuthView.routeName);
     });
     return const Scaffold(body: AppLoadingView());
   }

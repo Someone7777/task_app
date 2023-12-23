@@ -7,8 +7,7 @@ class LoadingWidget extends StatelessWidget {
   final double? strokeWidth;
 
   const LoadingWidget(
-      {this.color = Colors.green, this.text, this.strokeWidth, Key? key})
-      : super(key: key);
+      {this.color = Colors.green, this.text, this.strokeWidth, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class LoadingWidget extends StatelessWidget {
         height: 200,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppLayout.containerRadius),
-          color: const Color.fromARGB(115, 231, 231, 231),
+          color: const Color.fromARGB(255, 231, 231, 231),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -29,7 +28,7 @@ class LoadingWidget extends StatelessWidget {
               padding: const EdgeInsets.all(AppLayout.genericPadding),
               child: CircularProgressIndicator.adaptive(
                 valueColor: AlwaysStoppedAnimation<Color>(color),
-                strokeWidth: strokeWidth ?? 6.0,
+                strokeWidth: strokeWidth ?? 8.0,
               ),
             ),
             if (text != null && text!.isNotEmpty)

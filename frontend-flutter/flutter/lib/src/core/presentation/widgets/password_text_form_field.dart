@@ -33,8 +33,7 @@ class PasswordTextFormField extends StatefulWidget {
       this.multiLine = false,
       this.showCounterText = false,
       this.textAlign,
-      Key? key})
-      : super(key: key);
+      super.key});
 
   @override
   State<PasswordTextFormField> createState() => _PasswordTextFormFieldState();

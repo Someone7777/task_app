@@ -75,7 +75,10 @@ class AuthView extends ConsumerWidget {
                       child: Column(
                         children: [
                           TabBar(
+                              tabAlignment: TabAlignment.center,
                               isScrollable: true,
+                              dividerColor: Colors.transparent,
+                              indicatorSize: TabBarIndicatorSize.tab,
                               indicatorColor:
                                   const Color.fromARGB(255, 7, 136, 76),
                               tabs: [

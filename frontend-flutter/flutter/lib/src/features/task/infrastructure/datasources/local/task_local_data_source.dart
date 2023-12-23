@@ -38,12 +38,32 @@ class TaskLocalDataSource {
     }
   }
 
-  Future<Either<Failure, void>> delete(BigInt id) async {
+  Future<Either<Failure, void>> delete(int id) async {
     try {
       await localDbClient.deleteById(id: id.toString(), tableName: tableName);
       return right(null);
     } on Exception {
       return left(const EmptyFailure());
+    }
+  }
+
+  Future<Either<Failure, List<TaskEntity>>> list() async {
+    try {
+      final res = <TaskEntity>[];
+      final jsonObj = await localDbClient.getAllWithIds(tableName: tableName);
+      for (String id in jsonObj.keys) {
+        final taskJson = Map<String, dynamic>.from(jsonObj[id]);
+        final task = TaskEntity.fromJson(taskJson);
+        res.add(task);
+      }
+      if (res.isEmpty) {
+        return left(
+            const NoLocalEntityFailure(entityName: tableName, detail: ""));
+      }
+      return right(res);
+    } on Exception {
+      return left(
+          const NoLocalEntityFailure(entityName: tableName, detail: ""));
     }
   }
 }

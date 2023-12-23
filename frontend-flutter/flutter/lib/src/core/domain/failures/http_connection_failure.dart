@@ -3,6 +3,6 @@ import 'package:task_app/src/core/domain/failures/http_request_failure.dart';
 
 /// Represents Http connection error
 class HttpConnectionFailure extends HttpRequestFailure {
-  const HttpConnectionFailure({required String detail})
-      : super(detail: detail, statusCode: unknownStatusCode);
+  const HttpConnectionFailure({required super.detail})
+      : super(statusCode: unknownStatusCode);
 }

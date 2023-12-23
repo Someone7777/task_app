@@ -7,7 +7,7 @@ part 'task_entity.g.dart';
 @freezed
 class TaskEntity with _$TaskEntity {
   /// Factory constructor
-  /// [id] - [BigInt] id
+  /// [id] - [int] id
   /// [title] - [String] title
   /// [description] - [String] description
   /// [created] - [DateTime] created
@@ -17,7 +17,7 @@ class TaskEntity with _$TaskEntity {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory TaskEntity({
     // ignore: invalid_annotation_target
-    @JsonKey(includeIfNull: false) required BigInt? id,
+    @JsonKey(includeIfNull: false) required int? id,
     required String title,
     required String description,
     // ignore: invalid_annotation_target

@@ -36,8 +36,7 @@ class RegisterForm extends ConsumerStatefulWidget {
       required this.emailController,
       required this.passwordController,
       required this.repeatPasswordController,
-      Key? key})
-      : super(key: key);
+      super.key});
 
   @override
   ConsumerState<RegisterForm> createState() => _RegisterFormState();

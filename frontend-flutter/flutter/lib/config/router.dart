@@ -10,6 +10,7 @@ import 'package:task_app/src/features/auth/presentation/views/logout_view.dart';
 import 'package:task_app/src/features/auth/presentation/views/reset_password_view.dart';
 import 'package:task_app/src/features/auth/presentation/views/settings_view.dart';
 import 'package:task_app/src/features/auth/providers.dart';
+import 'package:task_app/src/features/home/presentation/views/home_view.dart';
 
 final router = GoRouter(
   errorBuilder: (context, state) {
@@ -34,9 +35,19 @@ final router = GoRouter(
     GoRoute(
         name: 'root',
         path: '/',
-        builder: (_, __) => const AppInfoLoadingView(),
+        builder: (_, __) => const AppLoadingView(),
         redirect: rootGuard,
         routes: [
+          GoRoute(
+            name: AppInfoLoadingView.routeName,
+            path: AppInfoLoadingView.routePath,
+            builder: (context, state) => const AppInfoLoadingView(),
+          ),
+          GoRoute(
+              name: HomeView.routeName,
+              path: HomeView.routePath,
+              builder: (context, state) => const HomeView(),
+              redirect: authGuardOrNone),
           GoRoute(
             name: AuthLoadingView.routeName,
             path: AuthLoadingView.routePath,
@@ -100,6 +111,9 @@ String? appGuard(BuildContext context, GoRouterState state) {
 
 @visibleForTesting
 String? rootGuard(BuildContext context, GoRouterState state) {
+  if (state.uri.toString() == "/") {
+    return "/${AppInfoLoadingView.routePath}";
+  }
   return null;
 }
 
@@ -116,8 +130,7 @@ Future<String?> authGuard(BuildContext context, GoRouterState state) async {
   final loggedIn = authStateListenable.value;
   final goingToAuth = state.name == AuthView.routeName;
   if (loggedIn && goingToAuth) {
-    // TODO home view
-    return "/HomeView.routePath";
+    return "/${HomeView.routePath}";
   } else if (!loggedIn && !goingToAuth) {
     return '/${AuthView.routePath}';
   } else if (state.extra == null || state.extra != true) {

@@ -14,9 +14,12 @@ class AppLanguagePickerDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).brightness == Brightness.light
-          ? Colors.grey[300]
-          : Colors.grey[600],
+      decoration: BoxDecoration(
+          color: Theme.of(context).brightness == Brightness.light
+              ? Colors.grey[300]
+              : Colors.grey[600],
+          borderRadius: const BorderRadius.all(Radius.circular(15))),
+      margin: const EdgeInsets.only(top: 5, right: 5),
       padding: const EdgeInsets.all(10.0),
       constraints: const BoxConstraints(maxWidth: 180),
       child: LanguagePickerDropdown(

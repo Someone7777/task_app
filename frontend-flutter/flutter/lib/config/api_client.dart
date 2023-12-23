@@ -27,14 +27,14 @@ class ApiClient {
 
   final BaseOptions options = BaseOptions(
       baseUrl: Environment.apiUrl,
-      connectTimeout: const Duration(seconds: 15000),
-      receiveTimeout: const Duration(seconds: 15000),
-      sendTimeout: const Duration(seconds: 15000),
+      connectTimeout: const Duration(seconds: 5),
+      receiveTimeout: const Duration(seconds: 5),
+      sendTimeout: const Duration(seconds: 5),
       followRedirects: false,
       validateStatus: (status) => true,
       headers: {
-        "content-type": ContentType.json.toString(),
-        "accept": ContentType.json.toString(),
+        HttpHeaders.contentTypeHeader: ContentType.json.toString(),
+        HttpHeaders.acceptHeader: ContentType.json.toString(),
       });
 
   ApiClient(
