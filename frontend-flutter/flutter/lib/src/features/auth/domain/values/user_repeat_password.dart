@@ -31,7 +31,7 @@ Either<Failure, String> _validate(
       ? appLocalizations.needRepeatedPassword
       : appLocalizations.passwordNotMatch;
   return left(
-    UnprocessableEntityFailure(
+    InvalidValueFailure(
       detail: message,
     ),
   );

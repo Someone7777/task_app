@@ -1,5 +1,6 @@
 {
   "es": [
+    "update",
     "code",
     "sendCode",
     "reSendCode",
@@ -49,6 +50,15 @@
     "lastLogin",
     "rememberCredentials",
     "userEditDialogTitle",
+    "taskTitle",
+    "taskDescription",
+    "taskFinishedDate",
+    "taskDeadlineDate",
+    "taskTitleRequired",
+    "taskTitleMaxLength",
+    "taskDescriptionRequired",
+    "taskDescriptionMaxLength",
+    "taskCreateDialogTitle",
     "language",
     "darkMode",
     "settingsDialogTitle"

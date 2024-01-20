@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:task_app/config/api_client.dart';
+import 'package:task_app/config/router.dart';
 import 'package:task_app/src/features/task/domain/entities/task_entity.dart';
+import 'package:task_app/src/features/task/presentation/views/task_create_view.dart';
 import 'package:task_app/src/features/task/presentation/widgets/task_card.dart';
 
 class TaskListView extends ConsumerWidget {
@@ -20,16 +22,15 @@ class TaskListView extends ConsumerWidget {
         itemBuilder: (BuildContext context, int index) {
           return TaskCard(taskEntity: taskList[index]);
         },
-        separatorBuilder: (BuildContext context, int index) => const Divider(),
+        separatorBuilder: (BuildContext context, int index) => Container(),
       ),
       Container(
-        margin: const EdgeInsets.only(bottom: 10),
-        alignment: Alignment.bottomCenter,
+        margin: const EdgeInsets.only(bottom: 10, right: 10),
+        alignment: Alignment.bottomRight,
         child: isConnected
             ? FloatingActionButton(
                 onPressed: () async {
-                  //context.push(
-                  //      "/${TaskView.routePath}/${TaskCreateView.routePath}");
+                  router.push("/${TaskCreateView.routePath}");
                 },
                 backgroundColor: Colors.grey,
                 child: const Icon(Icons.add),

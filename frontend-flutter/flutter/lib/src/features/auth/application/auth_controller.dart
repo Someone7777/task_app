@@ -86,22 +86,21 @@ class AuthController extends StateNotifier<AsyncValue<UserEntity?>> {
               state = const AsyncValue.data(null);
               return res.fold((failure) {
                 if (failure is ApiBadRequestFailure) {
-                  return left(
-                      UnprocessableEntityFailure(detail: failure.detail));
+                  return left(InvalidValueFailure(detail: failure.detail));
                 } else if (failure is InputBadRequestFailure) {
                   if (failure.containsFieldName("password")) {
-                    return left(UnprocessableEntityFailure(
+                    return left(InvalidValueFailure(
                         detail: failure.getFieldDetail("password")));
                   } else if (failure.containsFieldName("email")) {
-                    return left(UnprocessableEntityFailure(
+                    return left(InvalidValueFailure(
                         detail: appLocalizations.emailUsed));
                   } else if (failure.containsFieldName("username")) {
-                    return left(UnprocessableEntityFailure(
+                    return left(InvalidValueFailure(
                         detail: appLocalizations.usernameUsed));
                   }
                 }
-                return left(UnprocessableEntityFailure(
-                    detail: appLocalizations.genericError));
+                return left(
+                    InvalidValueFailure(detail: appLocalizations.genericError));
               }, (value) => right(value));
             });
           });
@@ -129,26 +128,27 @@ class AuthController extends StateNotifier<AsyncValue<UserEntity?>> {
           state = const AsyncValue.data(null);
           if (failure is ApiBadRequestFailure) {
             if (failure.errorCode == unverifiedEmailFailure) {
-              return left(UnprocessableEntityFailure(
+              return left(InvalidValueFailure(
                   detail: appLocalizations.emailNotVerified));
             }
-            return left(UnprocessableEntityFailure(detail: failure.detail));
+            return left(InvalidValueFailure(detail: failure.detail));
           } else if (failure is InputBadRequestFailure) {
             if (failure.containsFieldName("email")) {
-              return left(UnprocessableEntityFailure(
-                  detail: appLocalizations.emailNotValid));
+              return left(
+                  InvalidValueFailure(detail: appLocalizations.emailNotValid));
             }
           } else if (failure is UnauthorizedRequestFailure) {
-            return left(UnprocessableEntityFailure(
-                detail: appLocalizations.wrongCredentials));
+            return left(
+                InvalidValueFailure(detail: appLocalizations.wrongCredentials));
           }
-          return left(UnprocessableEntityFailure(
-              detail: appLocalizations.genericError));
+          return left(
+              InvalidValueFailure(detail: appLocalizations.genericError));
         }, (_) async {
           final res = await repository.getUser();
           return res.fold(
-              (failure) => left(UnprocessableEntityFailure(
-                  detail: appLocalizations.genericError)), (value) {
+              (failure) => left(
+                  InvalidValueFailure(detail: appLocalizations.genericError)),
+              (value) {
             state = AsyncValue.data(value);
             updateAuthState();
             return right(null);

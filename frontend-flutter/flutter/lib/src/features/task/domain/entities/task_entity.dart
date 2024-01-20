@@ -17,12 +17,12 @@ class TaskEntity with _$TaskEntity {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory TaskEntity({
     // ignore: invalid_annotation_target
-    @JsonKey(includeIfNull: false) required int? id,
+    @JsonKey(includeIfNull: false) int? id,
     required String title,
     required String description,
     // ignore: invalid_annotation_target
-    @JsonKey(includeIfNull: false) required DateTime? created,
-    required DateTime? finished,
+    @JsonKey(includeIfNull: false) DateTime? created,
+    DateTime? finished,
     required DateTime deadline,
   }) = _TaskEntity;
 

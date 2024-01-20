@@ -18,6 +18,7 @@
     "loadingData": "Loading data",
     "confirmation": "Confirm",
     "create": "Create",
+    "update": "Update",
     "cancel": "Cancel",
 
     "@_CODE":{},
@@ -72,6 +73,17 @@
     "lastLogin": "Last login",
     "rememberCredentials": "Remember crdentials",
     "userEditDialogTitle": "Edit account",
+
+    "@_TASK":{},
+    "taskTitle": "Title",
+    "taskDescription": "Description",
+    "taskFinishedDate": "Finished Date",
+    "taskDeadlineDate": "Deadline Date",
+    "taskTitleRequired": "Task title is required",
+    "taskTitleMaxLength": "Task title has a maximum of 50 characters",
+    "taskDescriptionRequired": "Task description is required",
+    "taskDescriptionMaxLength": "Task description has a maximum of 300 characters",
+    "taskCreateDialogTitle": "Task Creation",
 
     "@_SETTINGS":{},
     "language": "Language",

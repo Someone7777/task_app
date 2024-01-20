@@ -11,6 +11,8 @@ import 'package:task_app/src/features/auth/presentation/views/reset_password_vie
 import 'package:task_app/src/features/auth/presentation/views/settings_view.dart';
 import 'package:task_app/src/features/auth/providers.dart';
 import 'package:task_app/src/features/home/presentation/views/home_view.dart';
+import 'package:task_app/src/features/task/presentation/views/task_create_view.dart';
+import 'package:task_app/src/features/task/presentation/views/task_edit_view.dart';
 
 final router = GoRouter(
   errorBuilder: (context, state) {
@@ -78,6 +80,18 @@ final router = GoRouter(
             path: AppLoadingView.routePath,
             builder: (context, state) => const AppLoadingView(),
           ),
+          GoRoute(
+            name: TaskCreateView.routeName,
+            path: TaskCreateView.routePath,
+            builder: (context, state) => const TaskCreateView(),
+          ),
+          GoRoute(
+              name: TaskEditView.routeName,
+              path: TaskEditView.routePath,
+              builder: (context, state) => TaskEditView(
+                    id: int.parse(
+                        GoRouterState.of(context).uri.queryParameters['id']!),
+                  )),
           GoRoute(
               name: 'passwordRoot',
               path: 'password',

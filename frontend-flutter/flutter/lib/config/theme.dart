@@ -38,6 +38,11 @@ class AppTheme {
         displayColor: Colors.white,
         decorationColor: Colors.white,
       ),
+      // Text field widget theme
+      inputDecorationTheme: const InputDecorationTheme(
+        hintStyle: TextStyle(color: Colors.white),
+        labelStyle: TextStyle(color: Colors.white),
+      ),
       colorScheme: ColorScheme.fromSwatch(primarySwatch: AppColors.primaryColor)
           .copyWith(
               brightness: Brightness.dark, background: AppColors.primaryColor));

@@ -16,9 +16,7 @@ class UserFullName extends ValueAbstract<String> {
     );
   }
 
-  const UserFullName._(this._value
-  
-  );
+  const UserFullName._(this._value);
 }
 
 /// * minLength: 1
@@ -37,7 +35,7 @@ Either<Failure, String> _validate(
           ? appLocalizations.fullnameMaxSize
           : appLocalizations.fullnameNotValid;
   return left(
-    UnprocessableEntityFailure(
+    InvalidValueFailure(
       detail: message,
     ),
   );

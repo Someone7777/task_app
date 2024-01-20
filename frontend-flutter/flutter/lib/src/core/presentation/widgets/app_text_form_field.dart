@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppTextFormField extends StatelessWidget {
   final String title;
   final TextEditingController controller;
+  final Color? textColor;
   final double? maxWidth;
   final double? maxHeight;
   final int? maxCharacters;
@@ -31,7 +32,8 @@ class AppTextFormField extends StatelessWidget {
       this.multiLine = false,
       this.showCounterText = false,
       this.textAlign,
-      super.key});
+      super.key,
+      this.textColor});
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,7 @@ class AppTextFormField extends StatelessWidget {
               onTap: readOnly ? null : onTap,
               controller: controller,
               validator: validator,
+              style: textColor != null ? TextStyle(color: textColor) : null,
               decoration: InputDecoration(
                 counterText: showCounterText ? null : '',
                 labelText: title,
@@ -66,10 +69,6 @@ class AppTextFormField extends StatelessWidget {
                 ),
                 border: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black)),
-                labelStyle: TextStyle(
-                    color: Theme.of(context).brightness == Brightness.light
-                        ? Colors.black
-                        : Colors.white),
                 filled: true,
                 fillColor: readOnly
                     ? const Color.fromARGB(108, 167, 167, 167)

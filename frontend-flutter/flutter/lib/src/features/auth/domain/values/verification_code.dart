@@ -27,7 +27,7 @@ Either<Failure, String> _validate(
   }
   String message = appLocalizations.invalidCode;
   return left(
-    UnprocessableEntityFailure(
+    InvalidValueFailure(
       detail: message,
     ),
   );

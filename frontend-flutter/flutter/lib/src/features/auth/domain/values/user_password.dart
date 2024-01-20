@@ -32,7 +32,7 @@ Either<Failure, String> _validate(
           ? appLocalizations.shortPassword
           : appLocalizations.numericPassword;
   return left(
-    UnprocessableEntityFailure(
+    InvalidValueFailure(
       detail: message,
     ),
   );

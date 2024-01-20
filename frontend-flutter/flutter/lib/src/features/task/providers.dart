@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:task_app/config/providers.dart';
+import 'package:task_app/src/features/task/application/task_create_controller.dart';
+import 'package:task_app/src/features/task/application/task_edit_controller.dart';
 import 'package:task_app/src/features/task/application/task_list_controller.dart';
 import 'package:task_app/src/features/task/domain/repositories/task_repository_interface.dart';
 import 'package:task_app/src/features/task/domain/entities/task_entity.dart';
@@ -28,4 +30,18 @@ final taskListControllerProvider =
         (ref) {
   final repo = ref.watch(taskRepositoryProvider);
   return TaskListController(repository: repo);
+});
+
+final taskCreateControllerProvider =
+    StateNotifierProvider<TaskCreateController, AsyncValue<void>>(
+        (ref) {
+  final repo = ref.watch(taskRepositoryProvider);
+  return TaskCreateController(repository: repo);
+});
+
+final taskEditControllerProvider =
+    StateNotifierProvider<TaskEditController, AsyncValue<void>>(
+        (ref) {
+  final repo = ref.watch(taskRepositoryProvider);
+  return TaskEditController(repository: repo);
 });

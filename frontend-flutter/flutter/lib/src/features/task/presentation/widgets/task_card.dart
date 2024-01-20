@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:task_app/config/api_client.dart';
 import 'package:task_app/config/app_layout.dart';
+import 'package:task_app/config/router.dart';
 import 'package:task_app/src/features/task/domain/entities/task_entity.dart';
+import 'package:task_app/src/features/task/presentation/views/task_edit_view.dart';
 
 class TaskCard extends ConsumerWidget {
   final TaskEntity taskEntity;
@@ -17,8 +19,8 @@ class TaskCard extends ConsumerWidget {
 
     return GestureDetector(
       onTap: () {
-        //context.pushNamed(TaskView.routeName + TaskEditView.routeName,
-        //    queryParameters: {"id": "${taskEntity.id}"});
+        router.pushNamed(TaskEditView.routeName,
+            queryParameters: {"id": "${taskEntity.id}"});
       },
       child: Card(
         shape: RoundedRectangleBorder(

@@ -18,8 +18,8 @@ class SettingsController extends StateNotifier<AsyncValue<void>> {
       {required this.authRepository, required this.settingsRepository})
       : super(const AsyncValue.data(null));
 
-  Future<Either<Failure, UserEntity>> handleLanguage(UserEntity user,
-      Locale lang, AppLocalizations appLocalizations) async {
+  Future<Either<Failure, UserEntity>> handleLanguage(
+      UserEntity user, Locale lang, AppLocalizations appLocalizations) async {
     state = const AsyncValue.loading();
     final res = await authRepository.updateUser(
       UserEntity(
@@ -32,18 +32,15 @@ class SettingsController extends StateNotifier<AsyncValue<void>> {
     );
     return res.fold((_) {
       state = const AsyncValue.data(null);
-      return left(
-          UnprocessableEntityFailure(detail: appLocalizations.genericError));
+      return left(InvalidValueFailure(detail: appLocalizations.genericError));
     }, (value) {
       state = const AsyncValue.data(null);
       return right(value);
     });
   }
 
-  Future<Either<Failure, UserEntity>> handleReceiveEmailBalance(
-      UserEntity user,
-      bool receiveEmailBalance,
-      AppLocalizations appLocalizations) async {
+  Future<Either<Failure, UserEntity>> handleReceiveEmailBalance(UserEntity user,
+      bool receiveEmailBalance, AppLocalizations appLocalizations) async {
     state = const AsyncValue.loading();
     final res = await authRepository.updateUser(
       UserEntity(
@@ -56,8 +53,7 @@ class SettingsController extends StateNotifier<AsyncValue<void>> {
     );
     return res.fold((_) {
       state = const AsyncValue.data(null);
-      return left(
-          UnprocessableEntityFailure(detail: appLocalizations.genericError));
+      return left(InvalidValueFailure(detail: appLocalizations.genericError));
     }, (value) {
       state = const AsyncValue.data(null);
       return right(value);
@@ -70,8 +66,7 @@ class SettingsController extends StateNotifier<AsyncValue<void>> {
     final res = await settingsRepository.saveTheme(theme);
     return res.fold((_) {
       state = const AsyncValue.data(null);
-      return left(
-          UnprocessableEntityFailure(detail: appLocalizations.genericError));
+      return left(InvalidValueFailure(detail: appLocalizations.genericError));
     }, (value) {
       state = const AsyncValue.data(null);
       return right(value);

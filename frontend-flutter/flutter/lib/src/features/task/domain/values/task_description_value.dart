@@ -4,30 +4,32 @@ import 'package:task_app/src/core/domain/failures/failure.dart';
 import 'package:task_app/src/core/domain/failures/unprocessable_entity_failure.dart';
 import 'package:task_app/src/core/domain/values/value_abstract.dart';
 
-/// Login User Password value
-class LoginPassword extends ValueAbstract<String> {
+class TaskDescriptionValue extends ValueAbstract<String> {
   @override
   Either<Failure, String> get value => _value;
   final Either<Failure, String> _value;
 
-  factory LoginPassword(AppLocalizations appLocalizations, String input) {
-    return LoginPassword._(
+  factory TaskDescriptionValue(
+      AppLocalizations appLocalizations, String input) {
+    return TaskDescriptionValue._(
       _validate(appLocalizations, input),
     );
   }
 
-  const LoginPassword._(this._value);
+  const TaskDescriptionValue._(this._value);
 }
 
-/// * minLength: 1
 Either<Failure, String> _validate(
     AppLocalizations appLocalizations, String input) {
-  if (input.isNotEmpty) {
+  if (input.isNotEmpty && input.length <= 300) {
     return right(input);
   }
+  final String message = input.isEmpty
+      ? appLocalizations.taskDescriptionRequired
+      : appLocalizations.taskDescriptionMaxLength;
   return left(
     InvalidValueFailure(
-      detail: appLocalizations.needPassword,
+      detail: message,
     ),
   );
 }
